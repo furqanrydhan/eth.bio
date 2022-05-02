@@ -13,6 +13,7 @@ import "@openzeppelin/contracts/utils/Counters.sol";
 import "@thirdweb-dev/contracts/ThirdwebContract.sol";
 
 contract EthBio is ERC721Enumerable, ERC721URIStorage, ERC721Burnable, Pausable, Ownable, ThirdwebContract {
+
     using Counters for Counters.Counter;
     Counters.Counter private _tokenIds;
 
