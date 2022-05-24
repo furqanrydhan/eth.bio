@@ -6,27 +6,18 @@ import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Burnable.sol";
 import "@openzeppelin/contracts/security/Pausable.sol";
-import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
 import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
 import "@thirdweb-dev/contracts/ThirdwebContract.sol";
 
-contract EthBio is ERC721Enumerable, ERC721URIStorage, ERC721Burnable, Pausable, Ownable, ThirdwebContract {
+contract EthBio is ERC721Enumerable, ERC721URIStorage, ERC721Burnable, Pausable, ThirdwebContract {
 
     using Counters for Counters.Counter;
     Counters.Counter private _tokenIds;
 
     mapping(string => address) public usernames;
     mapping(address => string) public addresses;
-
-    function pause() public onlyOwner {
-        _pause();
-    }
-
-    function unpause() public onlyOwner {
-        _unpause();
-    }
 
     /* ERC721-related overrides */
     function _burn(uint256 tokenId) internal override(ERC721, ERC721URIStorage) {
