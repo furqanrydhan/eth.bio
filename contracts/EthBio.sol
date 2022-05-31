@@ -9,9 +9,9 @@ import "@openzeppelin/contracts/security/Pausable.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
 import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
-import "@thirdweb-dev/contracts/ThirdwebContract.sol";
 
-contract EthBio is ERC721Enumerable, ERC721URIStorage, ERC721Burnable, Pausable, ThirdwebContract {
+
+contract EthBio is ERC721Enumerable, ERC721URIStorage, ERC721Burnable, Pausable {
 
     using Counters for Counters.Counter;
     Counters.Counter private _tokenIds;
