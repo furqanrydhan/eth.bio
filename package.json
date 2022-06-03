@@ -36,6 +36,6 @@
     "@openzeppelin/contracts": "^4.6.0",
     "@openzeppelin/contracts-upgradeable": "^4.5.2",
     "@thirdweb-dev/contracts": "^2.3.9",
-    "thirdweb": "^0.4.2"
+    "thirdweb": "^0.4.5"
   }
 }
