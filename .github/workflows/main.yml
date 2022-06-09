@@ -21,7 +21,7 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       publish_output: ${{ steps.publish.outputs.stdout }}
-      test_msg: ${{ steps.test_msg.outputs.test_msg }}
+      test_msg: ${{ steps.test_msg.outputs.stdout }}
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
