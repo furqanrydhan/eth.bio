@@ -40,14 +40,14 @@ jobs:
         if: github.event_name == 'pull_request' || github.ref != format('refs/heads/{0}', github.event.repository.default_branch)
         run: |
           DEPLOY=$(npx thirdweb deploy)
-          DEPLOY=$(cat $DEPLOY | grep http)
+          DEPLOY=$(echo $DEPLOY | grep http)
           echo "::set-output name=stdout::$DEPLOY"
       - name: publish
         id: publish
         if: github.event_name != 'pull_request' && github.ref == format('refs/heads/{0}', github.event.repository.default_branch)
         run: |
           PUBLISH=$(npx thirdweb publish)
-          PUBLISH=$(cat $PUBLISH | grep http)
+          PUBLISH=$(echo $PUBLISH | grep http)
           echo "::set-output name=stdout::$PUBLISH"
 
   notify:
