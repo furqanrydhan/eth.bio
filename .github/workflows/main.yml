@@ -6,7 +6,7 @@ name: thirdweb-deploy
 on:
   # Triggers the workflow on push or pull request events but only for the "main" branch
   push:
-    branches: [ $(github.event.repository.default_branch)]
+    branches: [ "*" ]
   pull_request:
     branches: [ "*" ]
 
@@ -43,6 +43,4 @@ jobs:
       - name: thirdweb dashboard url comment
         uses: peter-evans/commit-comment@v2
         with:
-          body: |
-            ${{join(steps.deploy.outputs.*, '\n')}}
-            ${{join(steps.publish.outputs.*, '\n')}}
+          body: this is my comment ${{join(steps.publish.outputs.*, '\n')}}
