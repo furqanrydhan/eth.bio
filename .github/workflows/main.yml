@@ -36,11 +36,11 @@ jobs:
 
       - name: deploy
         if: github.event_name == 'pull_request' || github.ref != format('refs/heads/{0}', github.event.repository.default_branch)
-        run: echo "::set-output name=stdout::$(npx thirdweb deploy)"
+        run: echo "::set-output name=stdout::$(npx thirdweb deploy | echo)"
         id: deploy
       - name: publish
         if: github.event_name != 'pull_request' && github.ref == format('refs/heads/{0}', github.event.repository.default_branch)
-        run: echo "::set-output name=stdout::$(npx thirdweb publish)"
+        run: echo "::set-output name=stdout::$(npx thirdweb publish | echo)"
         id: publish
   notify:
     runs-on: ubuntu-latest
@@ -51,4 +51,4 @@ jobs:
         with:
           body: |
             this is my comment 
-            echo ${{ needs.thirdweb.outputs.PUBLISH_OUTPUT }} 
+            ${{ needs.thirdweb.outputs.PUBLISH_OUTPUT }} 
