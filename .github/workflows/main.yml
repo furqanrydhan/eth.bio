@@ -50,4 +50,4 @@ jobs:
         with:
           body: |
             this is my comment 
-            ${{ thirdweb.outputs.PUBLISH_OUTPUT }} 
+            echo ${{ needs.thirdweb.outputs.PUBLISH_OUTPUT }} 
