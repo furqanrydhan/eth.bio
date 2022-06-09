@@ -45,7 +45,7 @@ jobs:
         run: echo "::set-output name=stdout::$(npx thirdweb publish)"
       - name: test_msg
         id: test_msg
-        run: echo "::set-output name=stdout::test_msg"
+        run: echo "::set-output name=stdout::$(echo test)"
 
   notify:
     runs-on: ubuntu-latest
