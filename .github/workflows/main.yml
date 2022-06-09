@@ -19,6 +19,8 @@ jobs:
   thirdweb:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
+    outputs:
+      PUBLISH_OUTPUT: ${{ steps.publish.outputs.stdout }}
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
@@ -34,11 +36,11 @@ jobs:
 
       - name: deploy
         if: github.event_name == 'pull_request' || github.ref != format('refs/heads/{0}', github.event.repository.default_branch)
-        run: echo "::set-output name=THIRDWEB_OUTPUT::$(npx thirdweb deploy)"
+        run: echo "::set-output name=stdout::$(npx thirdweb deploy)"
         id: deploy
       - name: publish
         if: github.event_name != 'pull_request' && github.ref == format('refs/heads/{0}', github.event.repository.default_branch)
-        run: echo "::set-output name=THIRDWEB_OUTPUT::$(npx thirdweb publish)"
+        run: echo "::set-output name=stdout::$(npx thirdweb publish)"
         id: publish
   notify:
     runs-on: ubuntu-latest
@@ -48,5 +50,4 @@ jobs:
         with:
           body: |
             this is my comment 
-            ${{ jobs.thirdweb.steps.deploy.outputs.THIRDWEB_OUTPUT }} 
-            ${{ jobs.thirdweb.steps.publish.outputs.THIRDWEB_OUTPUT }}
+            ${{ jobs.thirdweb.outputs.PUBLISH_OUTPUT }} 
