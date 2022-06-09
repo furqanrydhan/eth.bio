@@ -6,7 +6,7 @@ name: thirdweb-deploy
 on:
   # Triggers the workflow on push or pull request events but only for the "main" branch
   push:
-    branches: [ "main", "master", "releases/**" ]
+    branches: [ github.event.repository.default_branch]
   pull_request:
     branches: [ "*" ]
 
@@ -19,7 +19,7 @@ jobs:
   deploy:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
-    if: github.ref != 'refs/heads/master'
+    if: github.ref != format('refs/heads/{0}', github.event.repository.default_branch)
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
@@ -36,7 +36,7 @@ jobs:
   publish:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main'
+    if: github.ref == format('refs/heads/{0}', github.event.repository.default_branch)
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
