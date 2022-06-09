@@ -43,4 +43,4 @@ jobs:
       - name: thirdweb dashboard url comment
         uses: peter-evans/commit-comment@v2
         with:
-          body: this is my comment ${{ steps.deploy.outputs.THIRDWEB_OUTPUT }} ${{ steps.publish.outputs }}
+          body: this is my comment ${{ steps.deploy.outputs.THIRDWEB_OUTPUT }} ${{ steps.publish.outputs.THIRDWEB_OUTPUT }}
