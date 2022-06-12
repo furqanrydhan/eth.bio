@@ -19,8 +19,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
-      - name: Install Foundry
-        uses: foundry-rs/foundry-toolchain@v1
+      - uses: foundry-rs/foundry-toolchain@v1
         with:
           version: nightly
 
@@ -28,7 +27,7 @@ jobs:
         id: deploy
         if: github.event_name == 'pull_request' || github.ref != format('refs/heads/{0}', github.event.repository.default_branch)
         run: |
-          DEPLOY=$(npx @thirdweb-dev/cli@dev deploy --ci | grep http)
+          DEPLOY=$(npx thirdweb deploy --ci | grep http)
           echo "::set-output name=stdout::$DEPLOY"
 
   publish:
@@ -36,12 +35,10 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       publish_output: ${{ steps.publish.outputs.stdout }}
-    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
-      - name: Install Foundry
-        uses: foundry-rs/foundry-toolchain@v1
+      - uses: foundry-rs/foundry-toolchain@v1
         with:
           version: nightly
 
@@ -49,9 +46,8 @@ jobs:
         id: publish
         if: github.event_name != 'pull_request' && github.ref == format('refs/heads/{0}', github.event.repository.default_branch)
         run: |
-          PUBLISH=$(npx @thirdweb-dev/cli@dev publish --ci | grep http)
+          PUBLISH=$(npx thirdweb publish --ci | grep http)
           echo "::set-output name=stdout::$PUBLISH"
-
 
   comment_on_commit:
     runs-on: ubuntu-latest
@@ -62,7 +58,12 @@ jobs:
         uses: peter-evans/commit-comment@v2
         with:
           body: |
-            Contract compiled, deploy using the button below
+            if [${{ needs.publish.outputs.publish_output }}]
+            then
+              Contract compiled, publish using the button below
+            else
+              Contract compiled, deploy using the button below
+            fi
             <p>
             <a href="${{ needs.publish.outputs.publish_output }}${{ needs.deploy.outputs.deploy_output }}"><img width="200px" src="https://gateway.thirdweb.dev/ipfs/QmZdGx8gd5sKyQeaxqDvpH7KNFiHF7zRjzPysPGW8TGYqN/0.svg" /></a>
           token: ${{ secrets.GITHUB_TOKEN }}
