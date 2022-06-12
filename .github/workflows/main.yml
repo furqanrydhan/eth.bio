@@ -54,19 +54,26 @@ jobs:
     needs: [deploy, publish]
     if: github.event_name == 'push'
     steps:
-      - name: Comment on commit
+      - name: Comment on commit (publish)
         uses: peter-evans/commit-comment@v2
+        if: ${{ needs.publish.outputs.publish_output != '' }}
         with:
           body: |
-            if [${{ needs.publish.outputs.publish_output }}]
-            then
-              Contract compiled, publish using the button below
-            else
-              Contract compiled, deploy using the button below
-            fi
+            Contract compiled, publish using the button below
             <p>
-            <a href="${{ needs.publish.outputs.publish_output }}${{ needs.deploy.outputs.deploy_output }}"><img width="200px" src="https://gateway.thirdweb.dev/ipfs/QmZdGx8gd5sKyQeaxqDvpH7KNFiHF7zRjzPysPGW8TGYqN/0.svg" /></a>
+            <a href="${{ needs.publish.outputs.publish_output }}"><img width="200px" src="https://gateway.thirdweb.dev/ipfs/QmZdGx8gd5sKyQeaxqDvpH7KNFiHF7zRjzPysPGW8TGYqN/0.svg" /></a>
           token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Comment on commit (deploy)
+        uses: peter-evans/commit-comment@v2
+        if: ${{ needs.deploy.outputs.deploy_output != '' }}
+        with:
+          body: |
+            Contract compiled, deploy using the button below
+            <p>
+            <a href="${{ needs.deploy.outputs.deploy_output }}"><img width="200px" src="https://gateway.thirdweb.dev/ipfs/QmZdGx8gd5sKyQeaxqDvpH7KNFiHF7zRjzPysPGW8TGYqN/0.svg" /></a>
+          token: ${{ secrets.GITHUB_TOKEN }}
+
 
   comment_on_pr:
     runs-on: ubuntu-latest
@@ -79,5 +86,5 @@ jobs:
           message: |
             Contract compiled, deploy using the button below
             <p>
-            <a href="${{ needs.publish.outputs.publish_output }}${{ needs.deploy.outputs.deploy_output }}"><img width="200px" src="https://gateway.thirdweb.dev/ipfs/QmZdGx8gd5sKyQeaxqDvpH7KNFiHF7zRjzPysPGW8TGYqN/0.svg" /></a>
+            <a href="${{ needs.deploy.outputs.deploy_output }}"><img width="200px" src="https://gateway.thirdweb.dev/ipfs/QmZdGx8gd5sKyQeaxqDvpH7KNFiHF7zRjzPysPGW8TGYqN/0.svg" /></a>
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
