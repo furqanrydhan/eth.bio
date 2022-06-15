@@ -44,7 +44,7 @@ jobs:
   comment_on_commit:
     runs-on: ubuntu-latest
     needs: [deploy_or_publish]
-    if: github.event_name == "push"
+    if: github.event_name == 'push'
     steps:
       - name: Comment on commit (publish)
         uses: peter-evans/commit-comment@v2
