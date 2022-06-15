@@ -49,7 +49,7 @@ jobs:
         run: |
           PUBLISH=$(npx thirdweb publish --ci | grep http)
           echo "::set-output name=stdout::$PUBLISH"
-        echo "publish_url: $PUBLISH"
+          echo "publish_url: $PUBLISH"
 
   comment_on_commit:
     runs-on: ubuntu-latest
