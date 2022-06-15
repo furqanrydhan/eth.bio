@@ -29,6 +29,7 @@ jobs:
         run: |
           DEPLOY=$(npx thirdweb deploy --ci | grep http)
           echo "::set-output name=stdout::$DEPLOY"
+          echo "deploy_url: $DEPLOY"
 
   publish:
     # The type of runner that the job will run on
@@ -48,6 +49,7 @@ jobs:
         run: |
           PUBLISH=$(npx thirdweb publish --ci | grep http)
           echo "::set-output name=stdout::$PUBLISH"
+        echo "publish_url: $PUBLISH"
 
   comment_on_commit:
     runs-on: ubuntu-latest

@@ -9,9 +9,9 @@ import "@openzeppelin/contracts/security/Pausable.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
 import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
+import "@thirdweb-dev/contracts/feature/ContractMetadata.sol";
 
-
-contract EthBio is ERC721Enumerable, ERC721URIStorage, ERC721Burnable, Pausable {
+contract EthBio is ERC721Enumerable, ERC721URIStorage, ERC721Burnable, Pausable, ContractMetadata {
 
     using Counters for Counters.Counter;
     Counters.Counter private _tokenIds;
@@ -38,6 +38,12 @@ contract EthBio is ERC721Enumerable, ERC721URIStorage, ERC721Burnable, Pausable 
 
     function tokenURI(uint256 tokenId) public view override(ERC721, ERC721URIStorage) returns (string memory) {
         return super.tokenURI(tokenId);
+    }
+
+    // Remember to implement the access control function
+    function _canSetContractURI() internal view override returns (bool) {
+        // example implementation:
+        return true;
     }
 
     /* Helper functions */
