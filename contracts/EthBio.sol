@@ -9,9 +9,10 @@ import "@openzeppelin/contracts/security/Pausable.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
 import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
-import "@thirdweb-dev/contracts/feature/ContractMetadata.sol";
+import "@thirdweb-dev/contracts/extension/ContractMetadata.sol";
+import "@thirdweb-dev/contracts/extension/AppURI.sol";
 
-contract EthBio is ERC721Enumerable, ERC721URIStorage, ERC721Burnable, Pausable, ContractMetadata {
+contract EthBio is ERC721Enumerable, ERC721URIStorage, ERC721Burnable, Pausable, ContractMetadata, AppURI {
 
     using Counters for Counters.Counter;
     Counters.Counter private _tokenIds;
@@ -46,6 +47,13 @@ contract EthBio is ERC721Enumerable, ERC721URIStorage, ERC721Burnable, Pausable,
         return true;
     }
 
+    // Remember to implement the access control function
+    function _canSetAppURI() internal view override returns (bool) {
+        // example implementation:
+        return true;
+    }
+
+
     /* Helper functions */
     function _toLower(string memory str) internal pure returns (string memory) {
         bytes memory bStr = bytes(str);
@@ -72,7 +80,9 @@ contract EthBio is ERC721Enumerable, ERC721URIStorage, ERC721Burnable, Pausable,
 
     /* External APIs */
     function getBio(address owner) public view returns (string memory) {
-        require(owner != address(0), "Address can not be 0");
+        if(owner == address(0)){
+            owner = _msgSender();
+        }
         uint256 balance = balanceOf(owner);
         require(balance > 0, "No token found for address");
         uint256 tokenId = tokenOfOwnerByIndex(owner, 0);

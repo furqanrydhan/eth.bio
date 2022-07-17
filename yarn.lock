@@ -817,10 +817,10 @@
   dependencies:
     defer-to-connect "^1.0.1"
 
-"@thirdweb-dev/contracts@^2.3.9":
-  version "2.3.9"
-  resolved "https://registry.npmjs.org/@thirdweb-dev/contracts/-/contracts-2.3.9.tgz"
-  integrity sha512-MmOVqWKdlFsZRk/Ym/fFfrCo/mzJyWL+EWsLYjpa3CUvwt6DffED+LB8pfTo8DkoTkC0Y9J4yzsdbJSgoa0tFw==
+"@thirdweb-dev/contracts@^3.0.1":
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/@thirdweb-dev/contracts/-/contracts-3.0.1.tgz#915ad593d5ef42ebd6e26c04a1d3498a8e72197b"
+  integrity sha512-VSK4djhHzwxOzx2BUke42emcyrklFcVzvNqK8gAupwNQzMtl/89D6yzXqtxQxEM39qP/SG4Q2olpVzD+tr/ymQ==
 
 "@truffle/error@^0.1.0":
   version "0.1.0"
